@@ -3,39 +3,88 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('../configure/cloudinary')
 
+
+//   from chat
 const signup = async (req, res) => {
     try {
-        console.log(req.body)
-        const users = await User.find({ email: req.body.email })
-        if (users.length > 0) {
-            return res.status(500).json({
-                error: 'email already registered....'
-            })
-        }
-        const hashCode = await bcrypt.hash(req.body.password, 10)
-        const newUser = new User({
-            channelName: req.body.channelName,
-            email: req.body.email,
-            description: req.body.description,
-            password: hashCode
-        })
+        console.log(req.body);
 
-        const result = await newUser.save()
-        res.status(200).json({
-            msg: 'account created',
+        const { channelName, email, description, password } = req.body;
+
+        // Check if email already exists
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return res.status(409).json({
+                error: "Email already registered"
+            });
+        }
+
+        // Hash password
+        const hashCode = await bcrypt.hash(password, 10);
+
+        // Create user
+        const newUser = new User({
+            channelName,
+            email,
+            description,
+            password: hashCode
+        });
+
+        const result = await newUser.save();
+
+        return res.status(201).json({
+            msg: "Account created",
             newUser: {
                 _id: result._id,
                 channelName: result.channelName
             }
-        })
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        return res.status(500).json({
+            error: "Internal server error"
+        });
     }
-    catch (err) {
-        console.log(err)
-        res.status(500).json({
-            error: err
-        })
-    }
-}
+};
+
+
+
+// const signup = async (req, res) => {
+//     try {
+//         console.log(req.body)
+//         const users = await User.find({ email: req.body.email })
+//         if (users.length > 0) {
+//             return res.status(500).json({
+//                 error: 'email already registered....'
+//             })
+//         }
+//         const hashCode = await bcrypt.hash(req.body.password, 10)
+//         const newUser = new User({
+//             channelName: req.body.channelName,
+//             email: req.body.email,
+//             description: req.body.description,
+//             password: hashCode
+//         })
+
+//         const result = await newUser.save()
+//         res.status(200).json({
+//             msg: 'account created',
+//             newUser: {
+//                 _id: result._id,
+//                 channelName: result.channelName
+//             }
+//         })
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(500).json({
+//             error: err
+//         })
+//     }
+// }
 
 
 const login = async (req, res) => {

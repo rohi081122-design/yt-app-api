@@ -6,17 +6,25 @@ const {
     getVideoById,
     likeUnlike,
     dislikeUndislike,
+    updateVideoDetails,
     deleteVideo,
-    updateVideoDetails
+    getVideoByChannelId,   //check
+    allVideoByChannelId     //check
 } = require('../controllers/videoController')
+
 
 
 router.post('/upload',upload)
 router.get('/getAllVideo', getAllVideo)
 router.get('/getVideo/:videoId', getVideoById)
+
 router.put('/like/:videoId', likeUnlike)
 router.put('/dislike/:videoId', dislikeUndislike)
-router.delete('/delete/:videoId', deleteVideo)
+
 router.put('/update/:videoId', updateVideoDetails)
+router.delete('/delete/:videoId', deleteVideo)
+
+router.get('/videoByChannelId/:channelId', getVideoByChannelId);  //Check
+router.get('/allVideoByChannelId/:channelId', allVideoByChannelId);     //check
 
 module.exports = router

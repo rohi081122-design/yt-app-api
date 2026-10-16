@@ -1,18 +1,32 @@
 const express = require('express')
 const router = express.Router()
-const {signup,
+const {
+    signup,
     login,
     subscribe,
     unsubscribe,
     uploadProfile,
-    uploadCoverProfilePic
+    uploadCoverProfilePic,
+
+    getChannelInfo,
+    getUserInfo,
+    updateChannelDetail,
+    logout
 } = require('../controllers/userController')
 
 router.post('/signup',signup)
 router.post('/login',login)
-router.put('/subscribe/:channelId',subscribe)
-router.put('/unsubscribe/:channelId',unsubscribe)
+
 router.put('/uploadProfile',uploadProfile)
 router.put('/uploadCoverPic',uploadCoverProfilePic)
+
+router.put('/subscribe/:channelId',subscribe)
+router.put('/unsubscribe/:channelId',unsubscribe)
+
+router.get('/getChannelInfo/:channelId', getChannelInfo); // check
+router.get('/getUserInfo', getUserInfo); // check
+
+router.put('/updateChannelDetail/:channelId', updateChannelDetail); // check
+router.delete('/logout', logout)
 
 module.exports = router

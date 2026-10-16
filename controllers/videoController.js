@@ -1,6 +1,7 @@
 const cloudinary = require('../configure/cloudinary') 
 const jwt = require('jsonwebtoken');
 const Video = require('../models/Video');
+const User = require('../models/User');
 
 // const cloudinary = require('cloudinary').v2;
 

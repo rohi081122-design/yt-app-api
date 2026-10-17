@@ -23,10 +23,10 @@ router.put('/uploadCoverPic',uploadCoverProfilePic)
 router.put('/subscribe/:channelId',subscribe)
 router.put('/unsubscribe/:channelId',unsubscribe)
 
-router.get('/getChannelInfo/:channelId', getChannelInfo); // check
-router.get('/getUserInfo', getUserInfo); // check
+router.get('/getChannelInfo/:channelId', getChannelInfo) // check
+router.get('/getUserInfo', getUserInfo) // check
 
-router.put('/updateChannelDetail/:channelId', updateChannelDetail); // check
+router.put('/updateChannelDetail/:channelId', updateChannelDetail) // check
 router.delete('/logout', logout)
 
 module.exports = router
